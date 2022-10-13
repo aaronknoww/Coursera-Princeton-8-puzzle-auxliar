@@ -8,29 +8,31 @@ class Board
 private:
 
 	int** tiles;
+	int n;
 	int col0;
 	int fil0;
 	Board* gemelo;
-	stack<Board>* sNeighbors;
+	vector<Board>* sNeighbors;
 
 public:
 	
 	Board(int **& tiles, int n);
-	/*string toString();
+	string toString();
 	int dimension();
 	int hamming();
 	int manhattan();
 	bool isGoal();
-	bool equals(Board y);
-	stack<Board>& neighbors();
-	Board twin();*/
+	int** getTile();
+	bool equals(Board &y);
+	vector<Board>& neighbors();
+	Board twin();
 
 	//~Board();
 	
 
 private:
 
-	//void createNeighbor(int fila, int col);
+	void createNeighbor(int fila, int col);
 
 
 };
