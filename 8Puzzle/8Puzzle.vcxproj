@@ -132,10 +132,12 @@
     <ClCompile Include="Source\8Puzzle.cpp" />
     <ClCompile Include="Source\Board.cpp" />
     <ClCompile Include="Source\Pch.cpp" />
+    <ClCompile Include="Source\Solver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Board.h" />
     <ClInclude Include="Headers\Pch.h" />
+    <ClInclude Include="Headers\Solver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
