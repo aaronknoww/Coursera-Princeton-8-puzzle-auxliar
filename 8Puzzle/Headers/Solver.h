@@ -9,13 +9,13 @@ public:
     Solver(Board *initial);
     
     // is the initial board solvable? (see below)
-    bool isSolvable();
+    bool isSolvable() { return solvable; }
 
     // min number of moves to solve initial board; -1 if unsolvable
-    int moves();
+    int moves() { return move; }
     
     // sequence of boards in a shortest solution; null if unsolvable
-    queue<Board> solution();
+    queue<Board*>* solution() { return solutionQue; }
 
 private:
     class NodeBoard
@@ -25,6 +25,7 @@ private:
         int hamming;
         int manhattan;
     public:
+        NodeBoard();
         NodeBoard(Board* board);
         Board* getBoard() { return board; }
         int getHamming() { return hamming; }
@@ -38,12 +39,25 @@ private:
         
     public:
         
-        bool operator() (NodeBoard& lhs, NodeBoard& rhs) const
+        bool operator() (NodeBoard &lhs, NodeBoard &rhs) const
         {
-            return lhs.getPrority() >= rhs.getPrority();
+            //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
+            cout << "\nTablero Izquierdo\n";
+            cout << lhs.getBoard()->toString() << endl;
+            cout << "ham: " << lhs.getBoard()->hamming() << endl;
+            cout << "man: " << lhs.getBoard()->manhattan() << endl;
+            cout << "********************\n";
+            //----------------------------
+            cout << "\nTablero Derecho\n";
+            cout << rhs.getBoard()->toString() << endl;
+            cout << "ham: " << rhs.getHamming() << endl;
+            cout << "man: " << rhs.getManhattan() << endl;
+            cout << "********************\n";
+            //----------------------------
+            return (lhs.getBoard()->hamming() + lhs.getBoard()->manhattan()) > (rhs.getBoard()->hamming() + rhs.getBoard()->manhattan());
         }
     };
-    //int moves;
+    int move;
     queue<Board*>* solutionQue;
     bool solvable;
     priority_queue<NodeBoard, vector<NodeBoard>, mycomparison>* priorityPQ;

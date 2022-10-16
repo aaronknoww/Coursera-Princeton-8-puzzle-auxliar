@@ -1,5 +1,6 @@
 #include "../Headers/Pch.h"
 #include "../Headers/Board.h"
+#include "../Headers/Solver.h"
 // 8Puzzle.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
 //
 
@@ -8,11 +9,8 @@ class mycomparison
 {
     bool reverse;
 public:
-    mycomparison(const bool& revparam = false)
-    {
-        reverse = revparam;
-    }
-    bool operator() (const int& lhs, const int& rhs) const
+  
+    bool operator() (int& lhs, int& rhs) const
     {
         if (reverse) return (lhs > rhs);
         else return (lhs < rhs);
@@ -65,9 +63,9 @@ int main()
         tiles2[i] = new int[n];
     }
 
-    int t[3][3] = { {8,1,3},
-                   {4,2,0},
-                   {7,6,5} };
+    int t[3][3] = {{1,2,3},
+                   {4,0,5},
+                   {7,8,6} };
     int d[3][3] = {{1,8,3},
                    {4,0,2},
                    {7,6,5} };
@@ -81,11 +79,19 @@ int main()
 
     
     Board * tablero = new Board(tiles, n);
+    Solver sol(tablero);
     Board * tablero2 = new Board(tiles2, n);
     
     int myints[] = { 10,60,50,20 };
 
-    priority_queue<int, std::vector<int>, mycomparison> mypq(myints, myints + 4, mycomparison(true));
+    //priority_queue<int, std::vector<int>, mycomparison> mypq(myints, myints + 4, mycomparison(true));
+    priority_queue<int, std::vector<int>, mycomparison> mypq;
+    mypq.push(15);
+    mypq.push(13);
+    mypq.push(20);
+    mypq.push(25);
+
+    
     priority_queue<NodeBoard2*, vector<NodeBoard2*>, MycomparisonB> *priorityPQ = new priority_queue<NodeBoard2*, vector<NodeBoard2*>, MycomparisonB>;
     //priorityPQ.push(new NodeBoard(tablero));
     NodeBoard2 *node = new NodeBoard2(tablero);
