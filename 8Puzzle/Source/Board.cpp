@@ -2,13 +2,14 @@
 #include "../Headers/Board.h"
 
 using namespace std;
+
 Board::Board(int**& tiles, int n)
 {
 	this->n = n;
 	col0 = 0; 
 	fil0 = 0;
 	gemelo = nullptr;
-	sNeighbors = new vector<Board>();
+	sNeighbors = new vector<Board*>();
 	
 	//Code to reserve memory to store tiles in order to create a board.
 	this->tiles = new int*[n];
@@ -131,7 +132,7 @@ bool Board::equals(Board& y)
 	return true;
 }
 
-vector<Board>& Board::neighbors()
+vector<Board*>& Board::neighbors()
 {
 	bool zero = false;
 
@@ -213,7 +214,7 @@ void Board::createNeighbor(int fila, int col) // fila, col --> Contain the posit
 	
 	tiles[fil0][col0] = tiles[fila][col];
 	tiles[fila][col] = 0;
-	sNeighbors->push_back(Board(tiles,n)); // TODO: VER QUE NO GENERE ERROR Y TENGA QUE MANDAR EL PUNTERO EN LUGAR DEL TABLERO.
+	sNeighbors->push_back(new Board(tiles,n)); // TODO: VER QUE NO GENERE ERROR Y TENGA QUE MANDAR EL PUNTERO EN LUGAR DEL TABLERO.
 	tiles[fila][col] = tiles[fil0][col0];
 	tiles[fil0][col0] = 0;
 	

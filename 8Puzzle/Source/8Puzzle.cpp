@@ -63,9 +63,14 @@ int main()
         tiles2[i] = new int[n];
     }
 
-    int t[3][3] = {{1,2,3},
-                   {4,0,5},
-                   {7,8,6} };
+    //int t[3][3] = {{1,2,3},
+    //               {4,0,5},
+    //               {7,8,6} };
+
+    
+    int t[3][3] = {{8,6,7},
+                   {2,5,4},
+                   {3,0,1} };
     int d[3][3] = {{1,8,3},
                    {4,0,2},
                    {7,6,5} };
@@ -80,6 +85,16 @@ int main()
     
     Board * tablero = new Board(tiles, n);
     Solver sol(tablero);
+    cout << "Tiene solucion? " << sol.isSolvable()<<endl;
+    int paso = 1;
+   while(!sol.solution()->empty())
+   {
+       cout << "Paso: " << paso << endl;
+       cout << "Tablero" << endl;
+       cout << sol.solution()->front()->toString() << endl;
+       sol.solution()->pop();
+       paso++;
+   }
     Board * tablero2 = new Board(tiles2, n);
     
     int myints[] = { 10,60,50,20 };

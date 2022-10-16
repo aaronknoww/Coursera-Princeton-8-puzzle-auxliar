@@ -41,19 +41,19 @@ private:
         
         bool operator() (NodeBoard &lhs, NodeBoard &rhs) const
         {
-            //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
-            cout << "\nTablero Izquierdo\n";
-            cout << lhs.getBoard()->toString() << endl;
-            cout << "ham: " << lhs.getBoard()->hamming() << endl;
-            cout << "man: " << lhs.getBoard()->manhattan() << endl;
-            cout << "********************\n";
-            //----------------------------
-            cout << "\nTablero Derecho\n";
-            cout << rhs.getBoard()->toString() << endl;
-            cout << "ham: " << rhs.getHamming() << endl;
-            cout << "man: " << rhs.getManhattan() << endl;
-            cout << "********************\n";
-            //----------------------------
+            ////CODIOG PARA DEPURAR TODO: borrar depues de depurar.
+            //cout << "\nTablero Izquierdo\n";
+            //cout << lhs.getBoard()->toString() << endl;
+            //cout << "ham: " << lhs.getBoard()->hamming() << endl;
+            //cout << "man: " << lhs.getBoard()->manhattan() << endl;
+            //cout << "********************\n";
+            ////----------------------------
+            //cout << "\nTablero Derecho\n";
+            //cout << rhs.getBoard()->toString() << endl;
+            //cout << "ham: " << rhs.getHamming() << endl;
+            //cout << "man: " << rhs.getManhattan() << endl;
+            //cout << "********************\n";
+            ////----------------------------
             return (lhs.getBoard()->hamming() + lhs.getBoard()->manhattan()) > (rhs.getBoard()->hamming() + rhs.getBoard()->manhattan());
         }
     };

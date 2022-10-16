@@ -12,7 +12,7 @@ private:
 	int col0;
 	int fil0;
 	Board* gemelo;
-	vector<Board>* sNeighbors;
+	vector<Board*>* sNeighbors;
 
 public:
 	
@@ -24,7 +24,7 @@ public:
 	bool isGoal();
 	int** getTile();
 	bool equals(Board &y);
-	vector<Board>& neighbors();
+	vector<Board*>& neighbors();
 	Board twin();
 
 	//~Board();
