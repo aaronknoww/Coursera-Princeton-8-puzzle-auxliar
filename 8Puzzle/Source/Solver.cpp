@@ -1,6 +1,8 @@
 #include "../Headers/Pch.h"
 #include "../Headers/Solver.h"
 
+using namespace std;
+
 Solver::NodeBoard::NodeBoard()
 {
     board = nullptr;
@@ -11,6 +13,7 @@ Solver::NodeBoard::NodeBoard()
 Solver::NodeBoard::NodeBoard(Board* board)
 {    
     this->board = board;
+    this->father = nullptr;
     this->hamming = this->board->hamming();
     this->manhattan = this->board->manhattan();    
 }
@@ -24,6 +27,7 @@ Solver::Solver(Board *initial)
     move = 0;
     solvable = false;
     solutionQue = new queue<Board*>;
+    vector<Board*> neighbors;
     if (initial->isGoal())
     {
         solutionQue->push(initial);
@@ -41,11 +45,11 @@ Solver::Solver(Board *initial)
     //----------------------------
 
     Board* board = nullptr;
-    
+    Board* frt = nullptr;
+    frt = solutionQue->back();
     do
     {
-        //TODO: PONER TODOS LOS TABLEROS EN MEMORIA HEAP.
-        //solutionQue->push(node.getBoard());
+             
         node = priorityPQ->top();
         priorityPQ->pop();
 
@@ -59,11 +63,19 @@ Solver::Solver(Board *initial)
 
         int vecino = 0; // TODO: borrar despues de depurar.
         
-        vector<Board*> neighbors = node.getBoard()->neighbors();
+        neighbors = node.getBoard()->neighbors();
+                
+        cout << "ULTIMO EN ENTRAR " <<  endl;
+        cout << frt->toString() << endl;
+
         for (size_t i = 0; i < neighbors.size(); i++)
         {
             board = neighbors[i];
+            if (board->equals(*frt))// To don't store the father board.
+                continue;
+
             priorityPQ->push(NodeBoard(board)); // To insert every neighbor in the preority queue, but need to be a board pointer.
+            //priorityPQ->push(neighbors[i]); TODO: REVISAR SI PUEDO QUITAR LA VARIABLE board
 
             //CODIGO PARA DEPURAR TODO: BORRAR DEPUES DE DEPURAR ejecutar esta parte
             vecino++;
@@ -72,10 +84,12 @@ Solver::Solver(Board *initial)
             //cout << "P " << board->toString() << endl;
             cout << "ham: " << neighbors[i]->hamming() << endl;
             cout << "man: " << neighbors[i]->manhattan() << endl;
-            cout << "********************";
+            cout << "********************" << endl;
             board = nullptr;
         }
 
+        cout << "|||||||||||||||||||||||||||" << endl;
+        cout << "\nTABLEROS DE TRABAJO" << endl;
         nTop = priorityPQ->top();
         //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
         cout << "\nTablero padre\n";
@@ -91,19 +105,17 @@ Solver::Solver(Board *initial)
         cout << "********************\n";
         //----------------------------
 
-        if ((node.getHamming() + node.getManhattan()) < (nTop.getHamming() + nTop.getManhattan())) // To comper Board father with his neighbor
-            return; //TODO: CHECAR SI SALE DEL PROGRAMA PORQUE NO TIENE SOLUCION.
+        //if ((node.getHamming() + node.getManhattan()) < (nTop.getHamming() + nTop.getManhattan())) // To comper Board father with his neighbor
+        //    return; //TODO: CHECAR SI SALE DEL PROGRAMA PORQUE NO TIENE SOLUCION.
 
         move++;
         goal = nTop.getBoard()->isGoal();
+        frt = solutionQue->back();
         solutionQue->push(nTop.getBoard());
 
-    } while (!goal);
+    } while (!goal && move < 100);
 
     solvable = true;
     //TODO: DEPURAR PARA VER SI FUNICIONA.
-
-
-
 
 }

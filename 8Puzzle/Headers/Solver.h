@@ -22,6 +22,7 @@ private:
     {
     private:
         Board* board;
+        NodeBoard* father;
         int hamming;
         int manhattan;
     public:
@@ -60,9 +61,7 @@ private:
     int move;
     queue<Board*>* solutionQue;
     bool solvable;
-    priority_queue<NodeBoard, vector<NodeBoard>, mycomparison>* priorityPQ;
-
-    
+    priority_queue<NodeBoard, vector<NodeBoard>, mycomparison>* priorityPQ;   
 
 };
 
