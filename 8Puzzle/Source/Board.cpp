@@ -89,7 +89,7 @@ int Board::manhattan()
 				continue;
 			if (tiles[row][col] != ((row * n) + col + 1))//----> (row*n)+col+1) This formula is to know which number corresponds to the current cluster.
 			{                                                //----> for example in matrix 3x3 [row = 0 col = 0] = 1; [row = 0 col = 1] = 2; [row = 0 col = 2] = 3;  
-				fila = tiles[row][col] / n; //------------> To find the row it belongs to the current number
+				fila = (tiles[row][col]-1) / n; //------------> To find the row it belongs to the current number
 				columna = tiles[row][col] - (fila * n + 1);//-> To find the column it belongs to the current number
 				man += abs(fila - row) + abs(columna - col);
 			}

@@ -68,18 +68,18 @@ int main()
     //               {7,8,6} };
 
     
-    /*int t[3][3] = {{8,6,7},
+    int t[3][3] = {{8,6,7},
                    {2,5,4},
                    {3,0,1} };
-    */
+    
     // //int t[3][3] = {{8,6,7},
     //                 {2,0,4},
     //                 {3,5,1} };
     
 
-    int t[3][3] = {{1,2,3},
+ /*   int t[3][3] = {{1,2,3},
                    {0,5,6},
-                   {4,7,8} };
+                   {4,7,8} };*/
 
     int d[3][3] = {{1,8,3},
                    {4,0,2},
@@ -97,7 +97,16 @@ int main()
     Solver sol(tablero);
     cout << "Tiene solucion? " << sol.isSolvable()<<endl;
     int paso = 1;
-   while(!sol.solution()->empty())
+   
+    while (!sol.solutionSk()->empty())
+    {
+        cout << "Paso: " << paso << endl;
+        cout << "Tablero" << endl;
+        cout << sol.solutionSk()->top()->toString() << endl;
+        sol.solutionSk()->pop();
+        paso++;
+    }
+    while(!sol.solution()->empty())
    {
        cout << "Paso: " << paso << endl;
        cout << "Tablero" << endl;
