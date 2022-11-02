@@ -53,7 +53,11 @@ public:
 
 int main()
 {
-    int n = 3;
+    /*int n = 3;
+    int** tiles = new int* [n];
+    int** tiles2 = new int* [n];
+    */
+    int n = 4;
     int** tiles = new int* [n];
     int** tiles2 = new int* [n];
 
@@ -67,19 +71,38 @@ int main()
     //               {4,0,5},
     //               {7,8,6} };
 
-    
+    /*
     int t[3][3] = {{8,6,7},
                    {2,5,4},
-                   {3,0,1} };
+                   {3,0,1} };*/
     
     // //int t[3][3] = {{8,6,7},
     //                 {2,0,4},
     //                 {3,5,1} };
+
+    int t[4][4] = { {0, 12, 9,13},
+                    {15, 11, 10, 14},
+                    {3, 7, 5, 6},
+                    {4, 8, 2, 1} };
     
 
  /*   int t[3][3] = {{1,2,3},
                    {0,5,6},
                    {4,7,8} };*/
+
+    
+    // No tiene solucion.
+    /*  int t[3][3] = {{1,2,3},
+                      {4,6,5},
+                      {7,8,0} };
+      */
+      
+      // No tiene solucion.
+  /*    int t[3][3] = {{8,6,7},
+                      {2,5,4},
+                      {1,3,0} };*/
+
+
 
     int d[3][3] = {{1,8,3},
                    {4,0,2},
@@ -93,6 +116,7 @@ int main()
         }
 
     
+    //Board * tablero = new Board(tiles, n);
     Board * tablero = new Board(tiles, n);
     Solver sol(tablero);
     cout << "Tiene solucion? " << sol.isSolvable()<<endl;

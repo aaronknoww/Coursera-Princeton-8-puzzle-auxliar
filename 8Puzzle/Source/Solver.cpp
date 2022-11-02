@@ -33,27 +33,38 @@ Solver::Solver(Board *initial)
     priorityPQ = nullptr;
     nodesCreated = nullptr;
     NodeBoard* node = nullptr;
+    NodeBoard* twinNode = nullptr;
     NodeBoard* aux = nullptr;
+    NodeBoard* twinAux = nullptr;
     NodeBoard* nTop;
+    NodeBoard* twinTop;
 
     bool goal = false;
     move = 0;
     solvable = false;
-    solutionQue = new queue<Board*>;
+    solutionQue = new queue<Board*>;// TODO: REPLACE FOR STACK.
     nodesCreated = new multiset<NodeBoard,CompByBoard>;
+    twinsCreated = new multiset<NodeBoard, CompByBoard>;
     vector<Board*> neighbors;
+    vector<Board*> twinNeighbors;
     
     if (initial->isGoal())
     {
         solutionQue->push(initial);
+        solvable = true;
         return;
     }
 
     solutionQue->push(initial);
     aux = new NodeBoard(initial, nullptr);
+    twinAux = new NodeBoard(initial->twin(), nullptr);
     priorityPQ = new priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>();
+    twinPQ = new priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>();
     priorityPQ->push(aux);
+    twinPQ->push(twinAux);
     nodesCreated->insert(*aux);
+    twinsCreated->insert(*twinAux);
+
 
     
     //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
@@ -71,7 +82,8 @@ Solver::Solver(Board *initial)
              
         node = priorityPQ->top();
         priorityPQ->pop();
-
+        twinNode = twinPQ->top();
+        twinPQ->pop();
         //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
         cout << "Tablero PADRE\n";
         cout << node->getBoard()->toString() << endl;
@@ -83,7 +95,7 @@ Solver::Solver(Board *initial)
         int vecino = 0; // TODO: borrar despues de depurar.
         
         neighbors = node->getBoard()->neighbors();
-                
+        twinNeighbors = twinNode->getBoard()->neighbors();
         cout << "ULTIMO EN ENTRAR " <<  endl;
         cout << frt->toString() << endl;
 
@@ -122,10 +134,45 @@ Solver::Solver(Board *initial)
             board = nullptr;
             aux = nullptr;
         }
+        
+        
+        // |||||||||||| TWIN AREA |||||||||||||||||||||
+
+
+        for (size_t i = 0; i < twinNeighbors.size(); i++)
+        {
+
+            if (twinNode->getFather() && (twinNode->getFather()->getBoard()->equals(*twinNeighbors[i])))
+                continue;
+
+            twinAux = new NodeBoard(twinNeighbors[i], twinNode);
+
+            for (auto it = twinsCreated->begin(); it != twinsCreated->end(); ++it)
+            {
+                if (twinAux && *twinAux == *it)
+                {
+                    delete twinAux;
+                    twinAux = nullptr;
+                    break;
+                }
+            }
+            if (twinAux == nullptr)
+                continue;
+
+
+            twinsCreated->insert(*twinAux);
+            twinPQ->push(twinAux); // To insert every neighbor in the preority queue, but need to be a board pointer.
+
+
+            twinAux = nullptr;
+        }
+
+            
 
         cout << "|||||||||||||||||||||||||||" << endl;
         cout << "\nTABLEROS DE TRABAJO" << endl;
         nTop = priorityPQ->top();
+        twinTop = twinPQ->top();
         //CODIOG PARA DEPURAR TODO: borrar depues de depurar.
         cout << "\nTablero padre\n";
         cout << node->getBoard()->toString() << endl;
@@ -151,22 +198,34 @@ Solver::Solver(Board *initial)
             solvable = false;
             return;
         }
-    } while (!goal);
+    } while ((!nTop->getBoard()->isGoal()) && (!twinTop->getBoard()->isGoal()));
 
-    solvable = true;
     delete solutionQue;
     solutionQue = nullptr;
     solutionQue = new queue<Board*>;
-    solutionStk = new stack<Board*>;
-    while (nTop != nullptr)
+    
+    if (nTop->getBoard()->isGoal())
     {
-        solutionQue->push(nTop->getBoard());
-        solutionStk->push(nTop->getBoard());
-        nTop = nTop->getFather();
+        solutionStk = new stack<Board*>;
+        while (nTop != nullptr)
+        {
+            solutionQue->push(nTop->getBoard());
+            solutionStk->push(nTop->getBoard());
+            nTop = nTop->getFather();
         
 
+        }
+        move = solutionQue->size();
+        solvable = true;
+        return;
+
     }
-    move = solutionQue->size();
+    else
+    {
+        move = -1;
+        solvable = false;
+        return;
+    }
     //TODO: DEPURAR PARA VER SI FUNICIONA.
 
 }

@@ -25,7 +25,7 @@ public:
 	int** getTile();
 	bool equals(Board &y);
 	vector<Board*>& neighbors();
-	Board twin();
+	Board* twin();
 
 	//~Board();
 	

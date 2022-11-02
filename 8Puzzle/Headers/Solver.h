@@ -89,7 +89,9 @@ private:
     queue<Board*>* solutionQue; // To store only solution boards.
     stack<Board*>* solutionStk;
     priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>* priorityPQ;
+    priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>* twinPQ;
     multiset<NodeBoard,CompByBoard>* nodesCreated;// To store every node created.
+    multiset<NodeBoard,CompByBoard>* twinsCreated;// To store every node created.
     int move;
     bool solvable;
 

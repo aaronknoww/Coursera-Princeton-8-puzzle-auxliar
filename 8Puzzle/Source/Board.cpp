@@ -166,10 +166,10 @@ vector<Board*>& Board::neighbors()
 
 }
 
-Board Board::twin()
+Board* Board::twin()
 {
 	if (gemelo != nullptr)
-		return *gemelo;
+		return gemelo;
 
 	int x;
 	int y;
@@ -206,7 +206,7 @@ Board Board::twin()
 	tiles[x2][y2] = tiles[x][y];
 	tiles[x][y] = aux;
 
-	return *gemelo;
+	return gemelo;
 }
 
 void Board::createNeighbor(int fila, int col) // fila, col --> Contain the position where the zero should be to crate a neighbor.
