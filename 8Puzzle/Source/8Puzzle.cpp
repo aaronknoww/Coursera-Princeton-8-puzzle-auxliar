@@ -122,22 +122,16 @@ int main()
     cout << "Tiene solucion? " << sol.isSolvable()<<endl;
     int paso = 1;
    
-    while (!sol.solutionSk()->empty())
+    while (!sol.solution()->empty())
     {
         cout << "Paso: " << paso << endl;
         cout << "Tablero" << endl;
-        cout << sol.solutionSk()->top()->toString() << endl;
-        sol.solutionSk()->pop();
+        cout << sol.solution()->top()->toString() << endl;
+        sol.solution()->pop();
         paso++;
     }
-    while(!sol.solution()->empty())
-   {
-       cout << "Paso: " << paso << endl;
-       cout << "Tablero" << endl;
-       cout << sol.solution()->front()->toString() << endl;
-       sol.solution()->pop();
-       paso++;
-   }
+   
+    
     Board * tablero2 = new Board(tiles2, n);
     
     int myints[] = { 10,60,50,20 };

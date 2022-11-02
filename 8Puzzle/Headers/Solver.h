@@ -15,8 +15,7 @@ public:
     int moves() { return move; }
     
     // sequence of boards in a shortest solution; null if unsolvable
-    queue<Board*>* solution() { return solutionQue; }
-    stack<Board*>* solutionSk() { return solutionStk; }
+    stack<Board*>* solution() { return solutionStk; }
 
 private:
     class NodeBoard
@@ -35,10 +34,8 @@ private:
         int getHamming() const { return hamming; }
         int getManhattan()const { return manhattan; }
         int getPrority() { return hamming + manhattan; }
-        bool isVisited() { return visited; }
         NodeBoard* getFather()const { return this->father; }
         void setFather(NodeBoard* father) { this->father = father; }
-        void setVisited(bool visited) { this->visited = visited; }
         bool operator==(const NodeBoard& obj) const
         {      
             NodeBoard copy = obj;
@@ -86,7 +83,7 @@ private:
         }
     };
   
-    queue<Board*>* solutionQue; // To store only solution boards.
+    //queue<Board*>* solutionQue; // To store only solution boards.
     stack<Board*>* solutionStk;
     priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>* priorityPQ;
     priority_queue<NodeBoard*, vector<NodeBoard*>, mycomparison>* twinPQ;
